@@ -9,6 +9,6 @@ This project provides new features as extensions to smartgwt. Some of these exte
 This section is listed so project members do not do duplicate efforts and instead coordinate their contributions.
 
  * Wizard framework - [http://code.google.com/u/farrukh.najm/ Farrukh Najmi]
- ** Work is underway and code is functional for simple wizards with no branches
- ** Need time to add it to project
+  * Work is underway and code is functional for simple wizards with no branches
+  * Need time to add it to project
  * ??
