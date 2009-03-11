@@ -2,11 +2,11 @@
 
 = Introduction =
 
-This project has extensions to smartgwt. Some of these extensions MAY be considered for inclusion into smartgwt at some point in the future.
+This project provides new features as extensions to smartgwt. Some of these extensions MAY be considered for inclusion into smartgwt at some point in the future.
 
 = Overview of Proposed Extnsions =
 
 This section is listed so project members do not do duplicated efforts and instead coordinate their contributions.
 
- * Wizard framework - farrukh.najm
+ * Wizard framework - [http://code.google.com/u/farrukh.najm/ Farrukh Najmi]
  * ??
