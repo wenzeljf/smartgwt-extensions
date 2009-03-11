@@ -6,7 +6,7 @@ This project provides new features as extensions to smartgwt. Some of these exte
 
 = Overview of Proposed Extnsions =
 
-This section is listed so project members do not do duplicated efforts and instead coordinate their contributions.
+This section is listed so project members do not do duplicate efforts and instead coordinate their contributions.
 
  * Wizard framework - [http://code.google.com/u/farrukh.najm/ Farrukh Najmi]
  * ??
