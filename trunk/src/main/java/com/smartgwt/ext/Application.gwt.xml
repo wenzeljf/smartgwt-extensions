@@ -1,0 +1,15 @@
+
+<module>
+    <!--inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.core.Core"/>
+    <inherits name="com.google.gwt.user.History"/-->
+
+    <inherits name="com.smartgwt.SmartGwt"/>
+
+    <!-- Specify the app entry point class.                         -->
+    <entry-point class='com.smartgwt.ext.client.Application'/>
+    
+    <!-- Specify the application specific style sheet.              -->
+    <!--stylesheet src='Application.css' /-->
+	
+</module>
