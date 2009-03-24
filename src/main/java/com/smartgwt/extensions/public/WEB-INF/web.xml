@@ -3,9 +3,11 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-	<display-name>gwt-test</display-name>
+
+	<display-name>SmartGWT Extensions</display-name>	
 	
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>Application.html</welcome-file>
 	</welcome-file-list>
+	
 </web-app>

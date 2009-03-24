@@ -1,0 +1,15 @@
+<module>
+
+	<inherits name="com.google.gwt.user.User" />
+
+	<inherits name="com.google.gwt.user.theme.standard.Standard" />
+
+	<inherits name="com.smartgwt.SmartGwt" />
+
+	<entry-point class="com.smartgwt.extensions.client.Application" />
+
+	<stylesheet src="Application.css" />
+
+	<servlet class="com.smartgwt.extensions.server.gwtrpcds.example.SimpleGwtRPCDSServiceImpl" path="/SimpleGwtRPCDSService" />
+
+</module>
