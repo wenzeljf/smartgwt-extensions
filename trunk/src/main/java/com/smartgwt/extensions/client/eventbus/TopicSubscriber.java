@@ -1,4 +1,4 @@
-package com.smartgwt.ext.client.eventbus;
+package com.smartgwt.extensions.client.eventbus;
 
 /**
  *

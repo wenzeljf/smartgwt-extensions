@@ -1,4 +1,4 @@
-package com.smartgwt.ext.client;
+package com.smartgwt.extensions.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
