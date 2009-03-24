@@ -6,6 +6,8 @@ The license for these contributions is LGPL to be consistent with  smartgwt proj
 
 TODO:
 
+-Need to fix build error on: mvn install
+
 -Add other contributions
 -Add unit tests
 -Add documentation

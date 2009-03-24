@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.smartgwt</groupId>
     <artifactId>smartgwt-ext</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>smartgwt-ext</name>
 	
@@ -69,11 +69,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
-        </dependency>
-        <dependency>
             <groupId>com.smartgwt</groupId>
             <artifactId>smartgwt</artifactId>
             <version>1.0b2-SNAPSHOT</version>
@@ -89,9 +84,9 @@
                 <!--version>2.0-beta26</version-->
                 <configuration>
                     <compileTargets>
-                        <value>com.smartgwt.client.Application</value>
+                        <value>com.smartgwt.ext.client.Application</value>
                     </compileTargets>
-                    <runTarget>com.smartgwt.client.Application/Application.html</runTarget>
+                    <runTarget>com.smartgwt.ext.client.Application/Application.html</runTarget>
                     <logLevel>INFO</logLevel>
                     <style>DETAILED</style>
                     <noServer>false</noServer>
