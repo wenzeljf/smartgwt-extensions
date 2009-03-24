@@ -10,11 +10,9 @@ import com.smartgwt.client.data.fields.DataSourceDateField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.rpc.RPCResponse;
-import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.grid.ListGrid;
+import com.smartgwt.client.util.JSOHelper;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.extensions.client.gwtrpcds.GwtRpcDataSource;
-
 import java.util.List;
 
 /**
@@ -44,10 +42,14 @@ public class SimpleGwtRPCDS
 
     @Override
     protected void executeFetch (final String requestId, final DSRequest request, final DSResponse response) {
-        // These can be used as parameters to create paging.
-//        request.getStartRow ();
-//        request.getEndRow ();
+        // This can be used as parameter for server side sorting.
 //        request.getSortBy ();
+
+        // Finding which rows were requested
+        // Normaly these two indexes should be passed to server
+        // but for this example I will do "paging" on client side
+        final int startIndex = (request.getStartRow () < 0)?0:request.getStartRow ();
+        final int endIndex = (request.getEndRow () == null)?-1:request.getEndRow ();
         SimpleGwtRPCDSServiceAsync service = GWT.create (SimpleGwtRPCDSService.class);
         service.fetch (new AsyncCallback<List<SimpleGwtRPCDSRecord>> () {
             public void onFailure (Throwable caught) {
@@ -55,13 +57,30 @@ public class SimpleGwtRPCDS
                 processResponse (requestId, response);
             }
             public void onSuccess (List<SimpleGwtRPCDSRecord> result) {
-                ListGridRecord[] list = new ListGridRecord[result.size ()];
-                for (int i = 0; i < list.length; i++) {
-                    ListGridRecord record = new ListGridRecord ();
-                    copyValues (result.get (i), record);
-                    list[i] = record;
+                // Calculating size of return list
+                int size = result.size ();
+                if (endIndex >= 0) {
+                    if (endIndex < startIndex) {
+                        size = 0;
+                    }
+                    else {
+                        size = endIndex - startIndex + 1;
+                    }
+                }
+                // Create list for return - it is just requested records
+                ListGridRecord[] list = new ListGridRecord[size];
+                if (size > 0) {
+                    for (int i = 0; i < result.size (); i++) {
+                        if (i >= startIndex && i <= endIndex) {
+                            ListGridRecord record = new ListGridRecord ();
+                            copyValues (result.get (i), record);
+                            list[i - startIndex] = record;
+                        }
+                    }
                 }
                 response.setData (list);
+                // IMPORTANT: for paging to work we have to specify size of full result set
+                response.setTotalRows (result.size ());
                 processResponse (requestId, response);
             }
         });
@@ -94,13 +113,9 @@ public class SimpleGwtRPCDS
     @Override
     protected void executeUpdate (final String requestId, final DSRequest request, final DSResponse response) {
         // Retrieve record which should be updated.
-        JavaScriptObject data = request.getData ();
-        ListGridRecord rec = new ListGridRecord (data);
-        // Find grid
-        ListGrid grid = (ListGrid) Canvas.getById (request.getComponentId ());
-        // Get record with old and new values combined
-        int index = grid.getRecordIndex (rec);
-        rec = (ListGridRecord) grid.getEditedRecord (index);
+        // Next line would be nice to replace with line:
+        // ListGridRecord rec = request.getEditedRecord ();
+        ListGridRecord rec = getEditedRecord (request);
         SimpleGwtRPCDSRecord testRec = new SimpleGwtRPCDSRecord ();
         copyValues (rec, testRec);
         SimpleGwtRPCDSServiceAsync service = GWT.create (SimpleGwtRPCDSService.class);
@@ -155,5 +170,19 @@ public class SimpleGwtRPCDS
         to.setAttribute ("id", from.getId ());
         to.setAttribute ("name", from.getName ());
         to.setAttribute ("date", from.getDate ());
+    }
+
+    private ListGridRecord getEditedRecord (DSRequest request) {
+        // Retrieving values before edit
+        JavaScriptObject oldValues = request.getAttributeAsJavaScriptObject ("oldValues");
+        // Creating new record for combining old values with changes
+        ListGridRecord newRecord = new ListGridRecord ();
+        // Copying properties from old record
+        JSOHelper.apply (oldValues, newRecord.getJsObj ());
+        // Retrieving changed values
+        JavaScriptObject data = request.getData ();
+        // Apply changes
+        JSOHelper.apply (data, newRecord.getJsObj ());
+        return newRecord;
     }
 }
