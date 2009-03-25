@@ -1,15 +1,19 @@
 package com.smartgwt.extensions.client.eventbus;
 
 /**
- *
- * @author farrukh@wellfleetsoftware.com
+ * Default callback that is notified when an event occurs
+ * 
+ * @author farrukh@wellfleetsoftware.com , mihai.ile@gmail.com
  */
 public interface TopicSubscriber<T> {
-    /**
-     * Listener that gets notified of an event that transpires on a topic.
-     *
-     * @param topic the topic on which event occured
-     * @param o the event object
-     */
-    public void onEvent(String topic, T o);
+
+	/**
+	 * Listener that gets notified of an event on a topic.
+	 * 
+	 * @param subscription
+	 *            the subscription that generated the event
+	 * @param event
+	 *            the event object
+	 */
+	public void onEvent(Subscription subscription, T event);
 }

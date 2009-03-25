@@ -6,43 +6,77 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A very simple EventBus for loosely coupled event driven coupling between components.
- * Currently, there is no event buffering and events are lost if no listeneres are registered when event is published.
- * Events are relayed serially to Listener in order that they were added.
- *
- * @author farrukh@wellfleetsoftware.com
+ * A very simple EventBus for loosely coupled event driven coupling between
+ * components. There is no buffering and events are lost if no listeners are
+ * registered when event is published. Events are relayed to Listeners in the
+ * order that they were added.
+ * 
+ * @author farrukh@wellfleetsoftware.com , mihai.ile@gmail.com
  */
 public class EventBus {
-    static Map<String, List<TopicSubscriber>> topicSubscribersMap = new HashMap<String, List<TopicSubscriber>>();
+	static Map<String, List<Subscription>> topicSubscribersMap = new HashMap<String, List<Subscription>>();
 
-    /**
-     * Publish an Object to a topic.
-     *
-     * @param topic the topic being published to
-     * @param o the event object being published
-     */
-    public static void publish(String topic, Object o) {
-        List<TopicSubscriber> topicSubscribers = topicSubscribersMap.get(topic);
-        if (topicSubscribers != null) {
-            for (TopicSubscriber topicSubscriber : topicSubscribers) {
-                topicSubscriber.onEvent(topic, o);
-            }
-        }
-    }
+	/**
+	 * Publish an Object to a topic if the topic exists
+	 * 
+	 * @param topic
+	 *            the topic being published to
+	 * @param o
+	 *            the event object being published
+	 */
+	@SuppressWarnings("unchecked")
+	public static void publish(String topic, Object o) {
+		List<Subscription> topicSubscribers = topicSubscribersMap.get(topic);
+		if (topicSubscribers != null) {
+			ArrayList<Subscription> tmpList = new ArrayList<Subscription>();
+			for (Subscription subscription : topicSubscribers) {
+				tmpList.add(subscription);
+			}
+			for (Subscription subscriber : tmpList) {
+				TopicSubscriber listener = subscriber.getListener();
+				listener.onEvent(subscriber, o);
+			}
+		}
+	}
 
-    /**
-     * Subscribe to a previously created topic.
-     *
-     * @param topic
-     * @param listener
-     */
-    public static void subscribe(String topic, TopicSubscriber listener) {
-        List<TopicSubscriber> topicListeners = topicSubscribersMap.get(topic);
-        if (topicListeners == null) {
-            topicListeners = new ArrayList<TopicSubscriber>();
-            topicSubscribersMap.put(topic, topicListeners);
-        }
+	/**
+	 * Creates a subscription to a given topic, if the topic doesen't exists a
+	 * new one will be created
+	 * 
+	 * @param topic
+	 *            the topic for the subscription
+	 * @param listener
+	 *            the listener to notify when receiving messages
+	 * @return a {@link Subscription} that represents this subscription, to be
+	 *         used later by {@link #unsubscribe(Subscription)}
+	 */
+	public static Subscription subscribe(String topic, TopicSubscriber<?> listener) {
+		Subscription subscription = new Subscription(topic, listener);
+		List<Subscription> topicSubscribers = topicSubscribersMap.get(topic);
+		if (topicSubscribers == null) {
+			topicSubscribers = new ArrayList<Subscription>();
+			topicSubscribersMap.put(topic, topicSubscribers);
+		}
+		topicSubscribers.add(subscription);
+		return subscription;
+	}
 
-        topicListeners.add(listener);
-    }
+	/**
+	 * Removes a subscription to the topic indicated by it if topic still exists
+	 * (if this subscription is the last one in the topic, the topic itself will
+	 * be removed from the {@link EventBus})
+	 * 
+	 * @param subscription
+	 *            the subscription to be removed
+	 */
+	public static void unsubscribe(Subscription subscription) {
+		String topic = subscription.getTopic();
+		List<Subscription> topicSubscribers = topicSubscribersMap.get(topic);
+		if (topicSubscribers != null) {
+			topicSubscribers.remove(subscription);
+			if (topicSubscribers.isEmpty()) {
+				topicSubscribersMap.remove(topic);
+			}
+		}
+	}
 }
