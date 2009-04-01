@@ -11,4 +11,7 @@ This section is listed so project members do not do duplicate efforts and instea
  * Wizard framework - [http://code.google.com/u/farrukh.najm/ Farrukh Najmi]
   * Work is underway and code is functional for simple wizards with no branches
   * Need time to add it to project
+ * File Uploader - [http://code.google.com/u/anthony.yuan/ Anthony Yuan]
+  * It will be similar as the UploadDialog in gwt-ext-ux;
+  * Almost done and will add it to project soon;
  * ??
