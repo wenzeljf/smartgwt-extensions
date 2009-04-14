@@ -36,7 +36,7 @@ public class CardLayoutCanvas extends Canvas {
     public void showCard(Object key) {
         for (Object _key : cards.keySet()) {
             Canvas c = cards.get(_key);
-            if (key == _key) {
+            if (key.equals(_key)) {
                 c.show();
                 currentCard = c;
             } else {
