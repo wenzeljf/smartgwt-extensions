@@ -17,6 +17,7 @@ import java.util.HashMap;
 public class CardLayoutCanvas extends Canvas {
 
     HashMap<Object, Canvas> cards = null;
+    private Canvas currentCard = null;
 
     public CardLayoutCanvas() {
         cards = new HashMap<Object, Canvas>();
@@ -29,6 +30,7 @@ public class CardLayoutCanvas extends Canvas {
         card.setPageTop(0);
         this.addChild(card);
         cards.put(key, card);
+        currentCard = card;
     }
 
     public void showCard(Object key) {
@@ -36,9 +38,24 @@ public class CardLayoutCanvas extends Canvas {
             Canvas c = cards.get(_key);
             if (key == _key) {
                 c.show();
+                currentCard = c;
             } else {
                 c.hide();
             }
         }
     }
+
+    /**
+     * @return the currentCard
+     */
+    public Canvas getCurrentCard() {
+        return currentCard;
+    }
+
+    /*
+    //Issue: show() draws all cards when it should only draw the shown card
+    @Override
+    public void show() {
+
+    }*/
 }
