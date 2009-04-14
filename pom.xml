@@ -48,6 +48,17 @@
 	</repositories>
 
 	<build>
+    <resources>
+      <resource>
+        <filtering>false</filtering>
+        <directory>${basedir}/src/main/java</directory>
+        <includes>
+          <include>**/*.java</include>
+          <include>**/*.xml</include>
+          <include>**/*.js</include>
+        </includes>
+      </resource>
+    </resources>
 
 		<plugins>
 
