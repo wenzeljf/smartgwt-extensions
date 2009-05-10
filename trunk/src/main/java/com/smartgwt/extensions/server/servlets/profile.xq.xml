@@ -1,0 +1,77 @@
+<xq>
+	<fetch>
+		<response>
+			<status>0</status>
+			<data>
+				<profile layout="4" help="false" photo="" id="1" forward="" provider="" theme="SilverWave">
+					<apps>
+					   <app id="libraryapp" column="0"/>
+					</apps>
+				</profile>
+            <apps>
+              <app>
+                <id>libraryapp</id>
+                <name>Library</name>
+                <description>Manage a library of files</description>
+                <icon>apps/Notes.png</icon>
+                <category>Utility</category>
+              </app>
+              <app>
+                <id>facebookapp</id>
+                <name>Facebook</name>
+                <description>Access your Facebook</description>
+                <icon>apps/Facebook.png</icon>
+                <category>Social</category>
+              </app>
+              <app>
+                <id>calendarapp</id>
+                <name>Calendar</name>
+                <description>Schedule Events</description>
+                <icon>apps/iCal.png</icon>
+                <category>Utility</category>
+              </app>
+              <app>
+                <id>chatapp</id>
+                <name>Chat</name>
+                <description>Chat with friends</description>
+                <icon>apps/iChat.png</icon>
+                <category>Communication</category>
+              </app>
+            </apps>
+				<env entry="login"/>
+				<projects>
+					<project id="1" context="ThinkSpace" model="ProblemSpace" title="CS403" owner="admin" lastName="User" firstName="Admin" directory="c:/cms/Thinkspace/1" version="1" subscribed="false" available="true"/>
+				</projects>
+			</data>
+		</response>
+	</fetch>
+	<add>
+		<response>
+			<status>0</status>
+			<data>
+				<record>
+					<id>12345</id>
+					<title>test</title>
+					<type>Class</type>
+				</record>
+			</data>
+		</response>
+	</add>
+	<update>
+		<response>
+			<status>0</status>
+			<data>
+			</data>
+		</response>
+	</update>
+	<remove>
+		<response>
+			<status>0</status>
+			<data>
+				<record>
+					<id>12345</id>
+				</record>
+			</data>
+		</response>
+	</remove>
+</xq>
