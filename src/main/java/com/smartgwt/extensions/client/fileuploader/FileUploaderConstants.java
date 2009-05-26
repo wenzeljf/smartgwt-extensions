@@ -11,6 +11,7 @@ public interface FileUploaderConstants {
 	static String MSG_SERVER_SIDE_ERROR = "msgServerSideError";
 	static String MSG_UPLOADING_FINISHED = "msgUploadingFinished";
 	static String MSG_INVALID_FILE_CHOSEN = "msgInvalidFileChosen";
+	static String MSG_NO_FILE_ADD = "msgNoFileAdd";
 
 	static String LABEL_FILE_NAME = "labelFileName";
 	static String LABEL_STATUS_CODE = "labelStatus";

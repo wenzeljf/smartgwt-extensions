@@ -18,6 +18,7 @@ public class FileGrid extends ListGrid implements FileUploaderConstants {
 		setEmptyCellValue("-");
 		setShowAllRecords(true);
 		setSelectionType(SelectionStyle.MULTIPLE);
+		setEmptyMessage(messageDictionary.get(MSG_NO_FILE_ADD));
 
 		setCanHover(true);
 
@@ -64,7 +65,7 @@ public class FileGrid extends ListGrid implements FileUploaderConstants {
 
 		setFields(fileStateField, fileNameField, noteField);
 	}
-	
+
 	public FileRecord[] getFileRecords() {
 		return convertToFileRecords(getRecords());
 	}
