@@ -1,11 +1,11 @@
 /** CSS for FileUploader. */
-.fileuploader-addFileInputContainer {
+.fileuploader-newFileInputContainer {
 	height: 20px;
 	overflow: hidden;
 	position: relative;
 	width: 100px;
 }
-.fileuploader-lastFileInput {
+.fileuploader-lastNewFileInput {
 	cursor: pointer;
 	font-size: 23px;
 	left: -24px;
@@ -18,11 +18,8 @@
 	//top: -11px;
 	width: 100px;
 	// width: 85px;
-	z-index: 300000;
+	/* z-index: 300000; */
 }
 .fileuploader-fileNameTip {
 	white-space: nowrap;
-}
-
-.addFileButton {
 }
