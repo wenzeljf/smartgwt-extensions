@@ -1,0 +1,8 @@
+<module>
+
+    <inherits name="com.smartgwt.extensions.FileUploader"/>
+
+	<entry-point
+		class='com.smartgwt.extensions.client.fileuploader.example.FileUploaderExample' />
+	
+</module>
