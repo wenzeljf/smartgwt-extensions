@@ -1,48 +1,39 @@
 package com.smartgwt.extensions.client.fileuploader;
 
+import java.util.ArrayList;
+
 import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.DOM;
+import com.google.gwt.i18n.client.Dictionary;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.extensions.client.fileuploader.event.FileSelectedEvent;
 import com.smartgwt.extensions.client.fileuploader.event.FileSelectedHandler;
 
-public class FileUploadInput extends FileUpload {
-	private static final String CSS_LAST_FILE_INPUT = "fu-lastFileInput";
+public class FileUploadInput extends FileUpload
+		implements
+			FileUploaderConstants {
 
-	private FileRecord fileRecord = new FileRecord();
-	
-	public FileUploadInput(String postVarName) {
-		// TODO 00 change the mock button image based on mouse events
+	private ArrayList<FileNameFilter> fileFilters;
+	private Dictionary messageDictionary;
+
+	public FileUploadInput(final String postVarName,
+			final ArrayList<FileNameFilter> fileFilters,
+			final Dictionary messageDictionary) {
+		setName(postVarName);
+		this.fileFilters = fileFilters;
+		this.messageDictionary = messageDictionary;
+
+		// TODO 01 change the mock button image based on mouse events
 		// sinkEvents(Event.ONBLUR | Event.ONCHANGE | Event.ONMOUSEOVER
 		// | Event.ONMOUSEOUT | Event.ONMOUSEMOVE);
 		sinkEvents(Event.ONCHANGE);
-		setName(postVarName);
 		((InputElement) getElement().cast()).setSize(1);
-		// TODO 00 move and resize the input instead of CSS.
-		addStyleName(CSS_LAST_FILE_INPUT);
-
-		DOM.setStyleAttribute(getElement(), "-moz-opacity", "50");
-		DOM.setStyleAttribute(getElement(), "cursor", "pointer");
-		DOM.setStyleAttribute(getElement(), "filter", "alpha(opacity=50)");
-		DOM.setStyleAttribute(getElement(), "font-size", "23px");
-		DOM.setStyleAttribute(getElement(), "opacity", "50");
-		DOM.setStyleAttribute(getElement(), "position", "absolute");
-		DOM.setStyleAttribute(getElement(), "width", "100px");
-		DOM.setStyleAttribute(getElement(), "z-index", "3000000");
-
-		if (SC.isIE()) {
-			DOM.setStyleAttribute(getElement(), "left", "-55px");
-			DOM.setStyleAttribute(getElement(), "top", "-55px");
-		} else {
-			DOM.setStyleAttribute(getElement(), "left", "-24px");
-			DOM.setStyleAttribute(getElement(), "top", "-16px");
-		}
+		addStyleName(CSS_LAST_NEW_FILE_INPUT);
 	}
 
 	public void onBrowserEvent(Event event) {
@@ -56,24 +47,55 @@ public class FileUploadInput extends FileUpload {
 		// return;
 		// }
 		String fileName = getFilename();
-		if (fileName == null || fileName.trim().length() == 0
-				|| fileName.equals(fileRecord.getFileName())) {
+		if (fileName == null || fileName.trim().length() == 0) {
 			return;
 		}
+
+		if (!validateFileName(fileName)) {
+			return;
+		}
+		
+		// set up Record based on selected file
 
 		fireEvent(new FileSelectedEvent(FileUploadInput.this, fileName));
 	}
 
-	public FileRecord getFileRecord() {
-		return fileRecord;
+	/**
+	 * Run file filters to validate the file name.
+	 * 
+	 * @param fileName
+	 * @return true if it is valid
+	 */
+	private boolean validateFileName(String fileName) {
+		if (fileFilters == null) {
+			return true;
+		}
+
+		String error = "";
+		for (FileNameFilter filter : fileFilters) {
+			if (!filter.validate(fileName)) {
+				error += "\n\n" + filter.getErrorMessage();
+			}
+		}
+		if (error.length() == 0) {
+			return true;
+		}
+
+		error = messageDictionary.get(MSG_INVALID_FILE_CHOSEN) + "\n<br/>\n"
+				+ error;
+		if (error.indexOf("{fileName}") > -1) {
+			error = error.replace("{fileName}", fileName);
+		}
+		SC.say(error);
+		return false;
 	}
-	
+
 	public HandlerRegistration addFileSelectedHandler(
 			FileSelectedHandler handler) {
 		return doAddHandler(handler, FileSelectedEvent.getType());
 	}
-	
-    private HandlerManager manager;
+
+	private HandlerManager manager;
 
 	public void fireEvent(GwtEvent<?> event) {
 		if (manager != null) {

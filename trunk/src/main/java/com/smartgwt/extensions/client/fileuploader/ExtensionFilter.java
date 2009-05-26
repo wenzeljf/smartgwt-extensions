@@ -1,5 +1,10 @@
 package com.smartgwt.extensions.client.fileuploader;
 
+/**
+ * Filter based on specified file extensions.
+ * 
+ * @author anthony.yuan@gmail.com
+ */
 public class ExtensionFilter implements FileNameFilter {
 	private String[] permittedExtensions;
 
