@@ -1,0 +1,11 @@
+<module>
+
+    <inherits name="com.smartgwt.SmartGwt"/>
+    <!--inherits name="com.smartgwt.SmartGwtNoScript"/-->
+    <!--inherits name="com.smartgwt.SmartGwtDebug"/-->
+    
+    <script src="fileuploader/FileUploader_i18n.js"/>
+    
+    <stylesheet src="fileuploader/css/FileUploader.css"/>
+
+</module>
