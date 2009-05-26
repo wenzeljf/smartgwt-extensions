@@ -518,6 +518,9 @@ public class FileUploader extends Window implements FileUploaderConstants {
 				formFileUpload = null;
 			}
 
+			uploadFileButton.enable();
+			resetFileButton.enable();
+
 			fireEvent(new UploadCompletedEvent(this));
 			return;
 		}
@@ -599,9 +602,9 @@ public class FileUploader extends Window implements FileUploaderConstants {
 	}
 
 	private void parseResult(JSONValue jsonValue) {
-		JSONObject jsonObject;
+		JSONObject jsonObject = jsonValue.isObject();
 
-		if ((jsonObject = jsonValue.isObject()) != null) {
+		if (jsonObject != null) {
 			String testData = "";
 			Set<String> keys = jsonObject.keySet();
 			for (String key : keys) {
@@ -616,16 +619,8 @@ public class FileUploader extends Window implements FileUploaderConstants {
 				onFailure(String.valueOf(jsonObject.get(JSON_KEY_REASON)),
 						jsonValue);
 			}
-			if (findNextFileRecordForUploading() == null) {
-				if (uploadingFileRecord != null) {
-					// this is the last one
-					fireEvent(new UploadCompletedEvent(this));
-
-					// enable buttons
-					uploadFileButton.enable();
-					resetFileButton.enable();
-				}
-			}
+		} else {
+			onFailure(messageDictionary.get(MSG_SERVER_SIDE_ERROR), null);
 		}
 	}
 
@@ -641,10 +636,6 @@ public class FileUploader extends Window implements FileUploaderConstants {
 			fireEvent(new FileUploadSuccessEvent(FileUploader.this,
 					uploadingFileRecord.getFileName(), jsonValue));
 		}
-
-		// update progressbar
-		progressbar.setPercentDone(progressbar.getPercentDone()
-				+ (100 / uploadFileNum));
 	}
 
 	private void onFailure(String message, JSONValue jsonValue) {
@@ -666,10 +657,6 @@ public class FileUploader extends Window implements FileUploaderConstants {
 			fireEvent(new FileUploadFailedEvent(FileUploader.this,
 					uploadingFileRecord.getFileName(), jsonValue));
 		}
-
-		// update progressbar
-		progressbar.setPercentDone(progressbar.getPercentDone()
-				+ (100 / uploadFileNum));
 	}
 
 	/* - Other -------------------------------------------------------------- */

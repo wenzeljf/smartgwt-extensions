@@ -12,7 +12,8 @@ var FileUploader_en = {
 	"labelClose": "Close",
 	"msgCouldntRetrieveServer": "Couldn't retrieve server. Please try it later.",
 	"msgServerSideError": "Server error, please report admin.",
+	"msgNoFileAdd": "No file is added.",
 	"msgInvalidFileChosen": "Invalid file '{fileName}' is chosen. Reason should follow. ",
 	"msgSuccess": "Uploaded successfully.",
-	"msgUploadingFinished": "Uploaded successfully."
+	"msgUploadingFinished": "Uploading is completed."
 };

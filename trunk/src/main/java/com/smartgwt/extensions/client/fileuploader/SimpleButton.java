@@ -10,6 +10,7 @@ public class SimpleButton extends Button {
 		setIcon(icon);
 		setShowRollOver(false);
 		setShowDownIcon(false);
+		setShowDisabledIcon(false);
 	}
 
 }
