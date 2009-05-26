@@ -34,8 +34,9 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
 import com.smartgwt.client.widgets.events.CloseClientEvent;
-import com.smartgwt.extensions.client.fileuploader.FileNameFilter;
+import com.smartgwt.extensions.client.fileuploader.ExtensionFilter;
 import com.smartgwt.extensions.client.fileuploader.FileUploader;
+import com.smartgwt.extensions.client.fileuploader.FileUploaderUtils;
 import com.smartgwt.extensions.client.fileuploader.event.BeforeFileAddEvent;
 import com.smartgwt.extensions.client.fileuploader.event.BeforeFileAddHandler;
 import com.smartgwt.extensions.client.fileuploader.event.UploadCompletedEvent;
@@ -65,13 +66,13 @@ public class FileUploaderExample implements EntryPoint {
 				final FileUploader dialog = FileUploader.popup("File Uploader",
 						"en");
 				dialog.setUrl(GWT.getModuleBaseURL()
-						+ "modules/core/uploadFile?parentType=folder&id=1");
+						+ "uploadFile?parentType=folder&id=1");
 				dialog.setPostVarName("file");
 				dialog.setWidth(602);
 				dialog.setHeight(300);
 				dialog.addUploadCompletedHandler(new UploadCompletedHandler() {
 					public void onCompleted(UploadCompletedEvent event) {
-						SC.say(FileUploader.getDictionary("en").get(
+						SC.say(FileUploaderUtils.getDictionary("en").get(
 								FileUploader.MSG_UPLOADING_FINISHED));
 					}
 				});
@@ -87,27 +88,8 @@ public class FileUploaderExample implements EntryPoint {
 						dialog.hide();
 					}
 				});
-				dialog.addFileNameFilter(new FileNameFilter() {
-
-					public String getErrorMessage() {
-						return "Extension has to be .bmp, .gif, .jpeg, .jpg, .pdf, or .png";
-					}
-
-					public boolean validate(String fileName) {
-						if (fileName == null) {
-							return false;
-						}
-						String testName = fileName.trim().toLowerCase();
-						return testName.endsWith(".bmp")
-								|| testName.endsWith(".gif")
-								|| testName.endsWith(".png")
-								|| testName.endsWith(".jpeg")
-								|| testName.endsWith(".jpg")
-								|| testName.endsWith(".pdf")
-								|| testName.endsWith(".png");
-					}
-
-				});
+				dialog.addFileNameFilter(new ExtensionFilter(".bmp", ".gif",
+						".jpeg", ".jpg", ".pdf", ".png"));
 			}
 		});
 
