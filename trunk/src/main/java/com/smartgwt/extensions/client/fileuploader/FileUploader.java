@@ -331,7 +331,7 @@ public class FileUploader extends Window implements FileUploaderConstants {
 		Element lastFileInputElement = lastNewFileInput.getElement();
 
 		DOM.setStyleAttribute(lastFileInputElement, "left", "" + (x - 50));
-		DOM.setStyleAttribute(lastFileInputElement, "top", "" + y);
+		DOM.setStyleAttribute(lastFileInputElement, "top", "" + (y - 2));
 		// DOM.setStyleAttribute(lastFileInputElement, "z-index", "" + (z + 1));
 		addFileDummyButton.setZIndex(0);
 	}
