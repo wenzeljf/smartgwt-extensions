@@ -38,6 +38,7 @@ import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.extensions.client.util.ButtonListener;
+import com.smartgwt.extensions.client.util.UI;
 import com.smartgwt.extensions.client.util.Util;
 
 /**
@@ -88,7 +89,7 @@ public class HTMLEditor extends Canvas {
         textArea = new HTMLFlow("");
 		textArea.setWidth(cssWidth);
         textArea.setHeight(cssHeight);
-        elementID = "edu-iastate-its-thinkspace-gwt-client-util-editor-htmleditor-"+textArea.getID();
+        elementID = SC.generateID();
         addChild(textArea);
      }
     
@@ -365,7 +366,7 @@ public class HTMLEditor extends Canvas {
 		var inputs = div.getElementsByTagName('input');
 		function submitTitle(title) {
 			return function() {
-				htmleditor.@edu.iastate.its.thinkspace.gwt.client.util.editor.HTMLEditor::submit(Ljava/lang/String;)(title);
+				htmleditor.@com.smartgwt.extensions.client.htmleditor.HTMLEditor::submit(Ljava/lang/String;)(title);
 				return false;
 			}
 		}
@@ -436,7 +437,7 @@ public class HTMLEditor extends Canvas {
 			editor.Config['FloatingPanelsZIndex'] = '8000001';
 			editor.ReplaceTextarea();
 	    	$doc.forms['form-'+name].onsubmit = function () {
-	       		htmleditor.@edu.iastate.its.thinkspace.gwt.client.util.editor.HTMLEditor::save()();
+	       		htmleditor.@com.smartgwt.extensions.client.htmleditor.HTMLEditor::save()();
 	       		return false;
 			};
 		} catch (e) {
