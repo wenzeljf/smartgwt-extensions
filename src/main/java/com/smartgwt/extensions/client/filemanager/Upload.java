@@ -183,7 +183,7 @@ public class Upload extends Canvas {
 	
 	private native void initComplete(Upload upload) /*-{
 	   $wnd.uploadComplete = function (fileName) {
-	       upload.@edu.iastate.its.thinkspace.gwt.client.util.files.Upload::uploadComplete(Ljava/lang/String;)(fileName);
+	       upload.@com.smartgwt.extensions.client.filemanager.Upload::uploadComplete(Ljava/lang/String;)(fileName);
 	   };
 	}-*/;
 }
