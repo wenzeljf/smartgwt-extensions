@@ -65,8 +65,8 @@ public class ResourceEditor extends Window {
 		form.setHeight(100);
 		LengthRangeValidator valLen = new LengthRangeValidator();
 		valLen.setClientOnly(true);
-		valLen.setMin(1);
-		valLen.setMax(100);
+		valLen.setMin("1");
+		valLen.setMax("100");
 		valLen.setErrorMessage("Please enter a value");
 
 		title = new TextItem("title");
