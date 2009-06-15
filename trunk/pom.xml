@@ -15,7 +15,7 @@
 
 	<properties>
 		<gwtVersion>1.5.3</gwtVersion>
-		<smartgwtVersion>1.0b3-SNAPSHOT</smartgwtVersion>
+		<smartgwtVersion>1.1</smartgwtVersion>
 	</properties>
 
 	<pluginRepositories>
