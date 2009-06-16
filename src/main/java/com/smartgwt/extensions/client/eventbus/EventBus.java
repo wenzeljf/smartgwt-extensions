@@ -32,9 +32,13 @@ public class EventBus {
 			for (Subscription subscription : topicSubscribers) {
 				tmpList.add(subscription);
 			}
-			for (Subscription subscriber : tmpList) {
-				TopicSubscriber listener = subscriber.getListener();
-				listener.onEvent(subscriber, o);
+			try { // do not propagate errors that occurred at the receptors back to senders
+				for (Subscription subscriber : tmpList) {
+					TopicSubscriber listener = subscriber.getListener();
+					listener.onEvent(subscriber, o);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
