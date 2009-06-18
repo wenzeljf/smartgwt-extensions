@@ -53,7 +53,7 @@ public class EventBus {
 	 * @return <code>true</code> if topic exists and contains at least one
 	 *         subscriber, <code>false</code> otherwise
 	 */
-	public boolean topicExists(String topic) {
+	public static boolean topicExists(String topic) {
 		List<Subscription> topicSubscribers = topicSubscribersMap.get(topic);
 		return topicSubscribers != null && !topicSubscribers.isEmpty();
 	}
