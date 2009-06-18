@@ -14,6 +14,7 @@ import java.util.Map;
  * @author farrukh@wellfleetsoftware.com , mihai.ile@gmail.com
  */
 public class EventBus {
+	
 	static Map<String, List<Subscription>> topicSubscribersMap = new HashMap<String, List<Subscription>>();
 
 	/**
@@ -41,6 +42,20 @@ public class EventBus {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * Checks if a given topic exists on the {@link EventBus} and contains at
+	 * least one subscriber
+	 * 
+	 * @param topic
+	 *            the name of the topic on the {@link EventBus} being checked
+	 * @return <code>true</code> if topic exists and contains at least one
+	 *         subscriber, <code>false</code> otherwise
+	 */
+	public boolean topicExists(String topic) {
+		List<Subscription> topicSubscribers = topicSubscribersMap.get(topic);
+		return topicSubscribers != null && !topicSubscribers.isEmpty();
 	}
 
 	/**
