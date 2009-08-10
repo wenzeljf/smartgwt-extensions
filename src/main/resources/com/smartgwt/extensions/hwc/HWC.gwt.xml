@@ -1,0 +1,9 @@
+<module>
+
+	<inherits name="com.smartgwt.SmartGwt" />
+	
+	<entry-point class="com.smartgwt.extensions.hwc.client.HWC" />
+	
+	<servlet class="com.smartgwt.extensions.hwc.server.HWCServlet" path="/HWCServlet" />
+	
+</module>

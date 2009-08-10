@@ -1,0 +1,7 @@
+<module>
+
+	<inherits name="com.smartgwt.extensions.eventbus.Eventbus" />
+	
+	<entry-point class="com.smartgwt.extensions.eventbus.client.example.EventbusExample" />
+	
+</module>

@@ -1,0 +1,12 @@
+package @@@packageName@@@.client;
+
+import com.google.gwt.core.client.EntryPoint;
+import com.smartgwt.client.util.SC;
+
+public class @@@entryName@@@ implements EntryPoint {
+
+	public void onModuleLoad() {
+		SC.say("Hello World!");
+	}
+
+}

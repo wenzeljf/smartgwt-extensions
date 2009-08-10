@@ -4,9 +4,9 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import com.smartgwt.extensions.client.gwtrpcds.example.SimpleGwtRPCDSRecord;
 import com.smartgwt.extensions.client.gwtrpcds.test.SimpleGwtRPCDSTestConfig;
-import com.smartgwt.extensions.server.gwtrpcds.example.SimpleGwtRPCDSServiceImpl;
+import com.smartgwt.extensions.gwtrpcds.client.example.SimpleGwtRPCDSRecord;
+import com.smartgwt.extensions.gwtrpcds.server.example.SimpleGwtRPCDSServiceImpl;
 
 public class SimpleGwtRPCDSServiceImplTest extends TestCase implements
 		SimpleGwtRPCDSTestConfig {

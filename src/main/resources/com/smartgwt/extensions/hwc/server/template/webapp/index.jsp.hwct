@@ -1,0 +1,1 @@
+<% response.sendRedirect("@@@packageName@@@.@@@entryName@@@/@@@entryName@@@.html"); %>

@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.smartgwt.extensions.client.gwtrpcds.example.SimpleGwtRPCDSRecord;
-import com.smartgwt.extensions.client.gwtrpcds.example.SimpleGwtRPCDSService;
+import com.smartgwt.extensions.gwtrpcds.client.example.SimpleGwtRPCDSRecord;
+import com.smartgwt.extensions.gwtrpcds.client.example.SimpleGwtRPCDSService;
 
 public class GwtTestSimpleGwtRPCDS extends GWTTestCase implements SimpleGwtRPCDSTestConfig {
 
