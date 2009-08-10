@@ -1,0 +1,7 @@
+<module>
+
+	<inherits name="com.smartgwt.extensions.modal.Modal" />
+	
+	<entry-point class="com.smartgwt.extensions.modal.client.example.ModalExample" />
+	
+</module>

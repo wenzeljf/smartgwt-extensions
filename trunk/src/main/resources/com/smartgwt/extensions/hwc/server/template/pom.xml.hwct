@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>@@@projectName@@@</name>
+	
+	<groupId>@@@groupId@@@</groupId>
+	<artifactId>@@@artifactId@@@</artifactId>
+	<version>@@@version@@@</version>
+	<packaging>war</packaging>
+	
+	<properties>
+		<versionGWT>@@@versionGWT@@@</versionGWT>
+		<versionSmartGWT>@@@versionSmartGWT@@@</versionSmartGWT>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>jboss.org</id>
+			<url>http://repository.jboss.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>ibiblio.org</id>
+			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>rorschach.de</id>
+			<url>http://smartgwtsnap.rorschach.de</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${versionGWT}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${versionGWT}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.smartgwt</groupId>
+			<artifactId>smartgwt</artifactId>
+			<version>${versionSmartGWT}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.smartgwt</groupId>
+			<artifactId>smartgwt-skins</artifactId>
+			<version>${versionSmartGWT}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<finalName>@@@projectName@@@</finalName>
+		<outputDirectory>${project.build.directory}/war/WEB-INF/classes</outputDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<configuration>
+							<module>@@@packageName@@@.@@@entryName@@@</module>
+							<runTarget>@@@packageName@@@.@@@entryName@@@/@@@entryName@@@.html</runTarget>
+							<hostedWebapp>${project.build.directory}/war</hostedWebapp>
+							<webappDirectory>${project.build.directory}/war</webappDirectory>
+							<buildDir>${project.build.directory}/war/WEB-INF</buildDir>
+						</configuration>
+						<goals>
+							<goal>resources</goal>
+							<goal>mergewebxml</goal>
+							<goal>compile</goal>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<webappDirectory>${project.build.directory}/war</webappDirectory>
+					<webXml>${project.build.directory}/war/WEB-INF/web.xml</webXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

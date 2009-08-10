@@ -1,0 +1,7 @@
+<module>
+
+	<inherits name="com.smartgwt.SmartGwt" />
+	
+	<inherits name="com.smartgwt.extensions.util.Util" />
+	
+</module>
