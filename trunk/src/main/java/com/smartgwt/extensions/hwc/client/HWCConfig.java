@@ -36,7 +36,7 @@ public interface HWCConfig {
 	
 	public static final LinkedHashMap<String, String> VERSION_SMARTGWT_VALUES = new LinkedHashMap<String, String>() {
 		{
-			put("1.0b2", "1.0b2 (beta)");
+			//put("1.0b2", "1.0b2 (beta)");
 			put("1.1", "1.1 (release)");
 			put("1.2-SNAPSHOT", "1.2-SNAPSHOT");
 		}
