@@ -32,8 +32,8 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>rorschach.de</id>
-			<url>http://smartgwtsnap.rorschach.de</url>
+			<id>smartclient.com</id>
+			<url>http://www.smartclient.com/smartgwt/maven2</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
