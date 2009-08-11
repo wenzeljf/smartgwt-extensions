@@ -1,11 +1,11 @@
-package com.smartgwt.extensions.server.gwtrpcds.test;
+package com.smartgwt.extensions.gwtrpcds.server.test;
 
 import java.util.List;
 
 import junit.framework.TestCase;
 
-import com.smartgwt.extensions.client.gwtrpcds.test.SimpleGwtRPCDSTestConfig;
 import com.smartgwt.extensions.gwtrpcds.client.example.SimpleGwtRPCDSRecord;
+import com.smartgwt.extensions.gwtrpcds.client.test.SimpleGwtRPCDSTestConfig;
 import com.smartgwt.extensions.gwtrpcds.server.example.SimpleGwtRPCDSServiceImpl;
 
 public class SimpleGwtRPCDSServiceImplTest extends TestCase implements

@@ -1,4 +1,4 @@
-package com.smartgwt.extensions.client.gwtrpcds.test;
+package com.smartgwt.extensions.gwtrpcds.client.test;
 
 import java.util.List;
 
