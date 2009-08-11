@@ -1,8 +1,9 @@
 <module>
 
-	<inherits name="com.smartgwt.SmartGwt" />
+	<inherits name="com.smartgwt.SmartGwtNoScript" />
 	
 	<inherits name="com.smartgwt.extensions.fileuploader.FileUploader" />
+	
 	<inherits name="com.smartgwt.extensions.htmleditor.HTMLEditor" />
 	
 </module>
