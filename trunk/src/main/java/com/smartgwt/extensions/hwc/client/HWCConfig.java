@@ -32,13 +32,13 @@ public interface HWCConfig {
 		}
 	};
 	
-	public static final String VERSION_SMARTGWT_DEFAULT = "1.1";
+	public static final String VERSION_SMARTGWT_DEFAULT = "1.2";
 	
 	public static final LinkedHashMap<String, String> VERSION_SMARTGWT_VALUES = new LinkedHashMap<String, String>() {
 		{
-			//put("1.0b2", "1.0b2 (beta)");
 			put("1.1", "1.1 (release)");
-			put("1.2-SNAPSHOT", "1.2-SNAPSHOT");
+			put("1.2", "1.2 (release)");
+			put("2.0-SNAPSHOT", "2.0-SNAPSHOT");
 		}
 	};
 	
