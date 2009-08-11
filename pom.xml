@@ -15,7 +15,7 @@
 
 	<properties>
 		<versionGWT>1.7.0</versionGWT>
-		<versionSmartGWT>1.1</versionSmartGWT>
+		<versionSmartGWT>1.2</versionSmartGWT>
 	</properties>
 
 	<repositories>
@@ -110,17 +110,21 @@
 				<executions>
 					<execution>
 						<configuration>
-						 
+
 							<modules>
+							
+								<!-- NOTE: modules with servlets need to go first (bug in gwt-maven-plugin?) -->			
+								<module>com.smartgwt.extensions.hwc.HWC</module>						
+								
 								<!--module>com.smartgwt.extensions.containers.ContainersExample</module-->
-								<!--module>com.smartgwt.extensions.eventbus.EventbusExample</module-->							 
-								<!--module>com.smartgwt.extensions.fileuploader.FileUploaderExample</module-->
+								<!--module>com.smartgwt.extensions.eventbus.EventbusExample</module-->		
+								<!--module>com.smartgwt.extensions.fileuploader.FileUploaderExample</module-->		
 								<!--module>com.smartgwt.extensions.gwtrpcds.GwtRpcDsExample</module-->
 								<!--module>com.smartgwt.extensions.htmleditor.HTMLEditorExample</module-->
-								<module>com.smartgwt.extensions.hwc.HWC</module>
 								<module>com.smartgwt.extensions.modal.ModalExample</module>
 								<!--module>com.smartgwt.extensions.notes.NotesExample</module-->
 								<module>com.smartgwt.extensions.showcase.Showcase</module>
+								
 							</modules>
  
 							<!--runTarget>com.smartgwt.extensions.containers.ContainersExample/ContainersExample.html</runTarget-->
@@ -139,7 +143,7 @@
 							<webappDirectory>${project.build.directory}/war</webappDirectory> 							
 							<buildDir>${project.build.directory}/war/WEB-INF</buildDir> 
 
-							<extraJvmArgs>-Xmx1024M -Xss1024k -Dgwt.jjs.permutationWorkerFactory=com.google.gwt.dev.ThreadedPermutationWorkerFactory</extraJvmArgs>
+							<extraJvmArgs>-Xmx512M -Xss1024k -Dgwt.jjs.permutationWorkerFactory=com.google.gwt.dev.ThreadedPermutationWorkerFactory</extraJvmArgs>
 						</configuration>
 						<goals>							
 							<goal>compile</goal>
