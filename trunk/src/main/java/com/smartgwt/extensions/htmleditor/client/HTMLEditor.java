@@ -366,7 +366,7 @@ public class HTMLEditor extends Canvas {
 		var inputs = div.getElementsByTagName('input');
 		function submitTitle(title) {
 			return function() {
-				htmleditor.@com.smartgwt.extensions.client.htmleditor.HTMLEditor::submit(Ljava/lang/String;)(title);
+				htmleditor.@com.smartgwt.extensions.htmleditor.client.HTMLEditor::submit(Ljava/lang/String;)(title);
 				return false;
 			}
 		}
@@ -437,7 +437,7 @@ public class HTMLEditor extends Canvas {
 			editor.Config['FloatingPanelsZIndex'] = '8000001';
 			editor.ReplaceTextarea();
 	    	$doc.forms['form-'+name].onsubmit = function () {
-	       		htmleditor.@com.smartgwt.extensions.client.htmleditor.HTMLEditor::save()();
+	       		htmleditor.@com.smartgwt.extensions.htmleditor.client.HTMLEditor::save()();
 	       		return false;
 			};
 		} catch (e) {
