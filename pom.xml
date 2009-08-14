@@ -116,7 +116,7 @@
 								<!-- NOTE: modules with servlets need to go first (bug in gwt-maven-plugin?) -->			
 								<module>com.smartgwt.extensions.hwc.HWC</module>						
 								
-								<!--module>com.smartgwt.extensions.containers.ContainersExample</module-->
+								<module>com.smartgwt.extensions.containers.ContainersExample</module>
 								<!--module>com.smartgwt.extensions.eventbus.EventbusExample</module-->		
 								<!--module>com.smartgwt.extensions.fileuploader.FileUploaderExample</module-->		
 								<!--module>com.smartgwt.extensions.gwtrpcds.GwtRpcDsExample</module-->

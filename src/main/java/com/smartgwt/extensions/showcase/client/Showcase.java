@@ -15,7 +15,7 @@ public class Showcase implements EntryPoint {
 		private static final long serialVersionUID = 1L;
 		{
 			put("", "");
-			//put("containers.ContainersExample/ContainersExample", "Containers");
+			put("containers.ContainersExample/ContainersExample", "Containers");
 			//put("eventbus.EventbusExample/EventbusExample", "Eventbus");
 			//put("fileuploader.FileUploaderExample/FileUploaderExample", "FileUploader");
 			//put("gwtrpcds.GwtRpcDsExample/GwtRpcDsExample", "GwtRpcDs");
