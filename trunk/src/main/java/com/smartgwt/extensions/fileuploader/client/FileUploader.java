@@ -34,9 +34,10 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormHandler;
-import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
-import com.google.gwt.user.client.ui.FormSubmitEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
+import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Progressbar;
@@ -560,15 +561,16 @@ public class FileUploader extends Window implements FileUploaderConstants {
 		canvas.hide();
 		addMember(canvas);
 
-		formFileUpload.addFormHandler(new FormHandler() {
-			public void onSubmit(FormSubmitEvent event) {
+		formFileUpload.addSubmitHandler(new SubmitHandler() {
+			public void onSubmit(SubmitEvent event) {
 				if (uploadingFileRecord != null) {
 					fireEvent(new FileUploadStartEvent(FileUploader.this,
 							uploadingFileRecord.getFileName()));
 				}
-
 			}
-			public void onSubmitComplete(FormSubmitCompleteEvent event) {
+		});
+		formFileUpload.addSubmitCompleteHandler(new SubmitCompleteHandler() {
+			public void onSubmitComplete(SubmitCompleteEvent event) {
 				GWT.log("Result: " + event.getResults(), null);
 				try {
 					JSONValue jsonValue = JSONParser
