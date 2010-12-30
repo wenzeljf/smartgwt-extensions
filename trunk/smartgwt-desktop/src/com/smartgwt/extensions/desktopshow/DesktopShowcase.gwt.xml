@@ -1,0 +1,7 @@
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.smartgwt.SmartGwt"/>
+	<inherits name="com.smartgwt.extensions.desktop.DesktopNoInherits"/>
+
+	<entry-point class="com.smartgwt.extensions.desktopshow.client.DesktopShowcase"/>
+</module>
