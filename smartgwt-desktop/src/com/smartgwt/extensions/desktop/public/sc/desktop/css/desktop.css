@@ -1,0 +1,20 @@
+html,body {
+  background-color: #3d71b8;
+  background-image: url(../images/desktop.jpg);
+  background-repeat: no-repeat;
+  background-position: left top;
+  font: normal 12px tahoma, arial, verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  overflow: hidden;
+  height: 100%;
+}
+
+.x-task-button-panel {
+	border-right:0px solid black;
+}
+
+.x-quickstart-bar {
+	border-left:0px solid black;
+}
