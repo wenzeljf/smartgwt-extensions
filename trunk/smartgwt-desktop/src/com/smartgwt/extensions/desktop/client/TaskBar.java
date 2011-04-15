@@ -137,6 +137,8 @@ public class TaskBar extends HLayout {
     }
 
     public void markDeactive(DesktopWindow win) {
-        tbPanel.items.get(win.getID()).setSelected(false);
+        TaskButton taskButton = tbPanel.items.get(win.getID());
+        if ( taskButton == null) return;
+		taskButton.setSelected(false);
     }
 }
