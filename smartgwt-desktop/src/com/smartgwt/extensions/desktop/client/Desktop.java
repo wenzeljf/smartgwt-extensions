@@ -27,11 +27,18 @@ public class Desktop {
     protected TaskBar taskBar = new TaskBar(this);
     protected WindowListener listener;
     protected VLayout viewport;
-    protected TileGrid desktop;
+    protected DesktopTileGrid desktop;
     protected DesktopWindow activeWindow;
     protected List<Shortcut> shortcuts;
     protected List<DesktopWindow> windows;
-
+    
+    class DesktopTileGrid extends TileGrid {
+    	public DesktopTileGrid() {
+    		super();
+    		setAttribute( "wrapValues", true, true);
+    	}
+    }
+    
     public Desktop() {
         shortcuts = new ArrayList<Shortcut>();
         windows = new ArrayList<DesktopWindow>();
@@ -44,14 +51,17 @@ public class Desktop {
         viewport.setHeight100();
         viewport.setBackgroundColor( "transparent");
 
-        desktop = new TileGrid();
+        desktop = new DesktopTileGrid();
         desktop.setShowEdges(false);
         DetailViewerField title = new DetailViewerField("title");
+
         DetailViewerField icon = new DetailViewerField("icon");
         icon.setType("image");
         icon.setImageSize(48);
         desktop.setFields(icon, title);
-        desktop.setTileHeight(70);
+        desktop.setTileHeight(80);
+        //desktop.setLayoutPolicy( TileLayoutPolicy.FIT);
+        //desktop.setTilesPerLine( 5);
         desktop.setTileWidth(60);
 
         desktop.setOrientation(Orientation.VERTICAL);
