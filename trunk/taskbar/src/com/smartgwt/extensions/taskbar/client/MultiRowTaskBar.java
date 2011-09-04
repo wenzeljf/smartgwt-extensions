@@ -8,6 +8,14 @@ import com.smartgwt.extensions.taskbar.client.events.EventChain;
 import com.smartgwt.extensions.taskbar.client.events.EventContainer;
 import com.smartgwt.extensions.taskbar.client.events.EventGroup;
 
+/**
+ * A variant to the base class (TaskBar) that, instead of shrinking the tasks as more are added, has a fixed
+ * tasks width, adds tasks in a tabular fashion, with a fixed number of columns and a variable number of rows;
+ * Taskbar's height varies automatically according to the number of rows.
+ * 
+ * @author Marcello La Rocca (marcellolarocca@gmail.com)
+ * 
+ */
 public class MultiRowTaskBar extends TaskBar {
 
 	protected final TaskBar thisTaskBar = this;
@@ -23,7 +31,7 @@ public class MultiRowTaskBar extends TaskBar {
 		//After initializing the base taskbar part of the object, a few more actions are needed
 		computeTasksWidth(width);
 		updateTaskBarHeight();		
-		setMaxTaskWidth(width);		//In case only one task per row is allowed
+		setMaxTasksWidth(width);		//In case only one task per row is allowed
 	}
 	
 	/**
@@ -192,7 +200,7 @@ public class MultiRowTaskBar extends TaskBar {
 			);
 			
 			final EventGroup resizeTasksEvent = new EventGroup();
-			mainEventsChain.addNewEventAfter(computeTaskBarHeightEvent);
+			mainEventsChain.addNewEventAfter(resizeTasksEvent, computeTaskBarHeightEvent);
 			for (int i=0; i<tasks.size(); i++ ){
 				final int pos = i;
 				final Event e = resizeTasksEvent.addNewEventAfterCurrent();
@@ -213,7 +221,7 @@ public class MultiRowTaskBar extends TaskBar {
 			tasksHeight = newTasksHeight;
 			
 			final EventGroup resizeTasksEvent = new EventGroup();
-			mainEventsChain.addNewEvent();
+			mainEventsChain.addNewEvent(resizeTasksEvent);
 			for (int i=0; i<tasks.size(); i++ ){
 				final int pos = i;
 				final Event e = resizeTasksEvent.addNewEventAfterCurrent();
@@ -354,6 +362,16 @@ public class MultiRowTaskBar extends TaskBar {
 	public void setHeight(String height){
 		//Do nothing, because you can't set Height!
 	}	
+	
+	
+	/**
+	 * Prevents other classes from getting Height
+	 */
+	@Deprecated
+	@Override
+	public int getTasksHeight(){
+		throw new IllegalArgumentException("Height can not be set or got in MultiRow Taskbars");
+	}
 	
 /**
 	@Override

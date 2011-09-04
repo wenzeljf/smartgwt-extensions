@@ -3,6 +3,12 @@ package com.smartgwt.extensions.taskbar.client;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.extensions.taskbar.client.events.Event;
 
+/**
+ * A variant to the base class (TaskBar) that automatically hides when it becomes empty, and show themself again
+ * once a new Task is registered
+ * @author Marcello La Rocca (marcellolarocca@gmail.com)
+ * 
+ */
 public class AutoHidingTaskBar extends TaskBar {
 
 	public AutoHidingTaskBar(int left, int top, int width, int height) {
