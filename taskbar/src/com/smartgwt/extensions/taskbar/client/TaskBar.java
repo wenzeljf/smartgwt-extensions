@@ -12,7 +12,8 @@ import com.smartgwt.extensions.taskbar.client.events.EventContainer;
 import com.smartgwt.extensions.taskbar.client.events.EventGroup;
 
 /**
- * 
+ * The class models a simple fixed-width taskbar, which can handle Windows registration and automatically
+ * shrinks or enlarge the tasks to cope with task removal or insertion
  * @author Marcello La Rocca (marcellolarocca@gmail.com)
  * 
  */
@@ -31,6 +32,8 @@ public class TaskBar extends Canvas {
 	 */
 	protected EventChain mainEventsChain;
 
+	protected TaskBarWindow selectedWindow = null;
+	
 	private static final int DEFAULT_TASK_WIDTH = 200;
 
 	protected static final int DEFAULT_MIN_TASK_WIDTH = 5;
@@ -96,6 +99,7 @@ public class TaskBar extends Canvas {
 		w.addToTaskBar(this, task);
 		try {
 			addTask(task, w);
+			task.enterFocusStatus();
 		} catch (Exception e) {
 			SC.warn(e.getMessage());
 			// UtilityServlet.alert(e.getMessage());
@@ -284,6 +288,10 @@ public class TaskBar extends Canvas {
 		int pos = getTaskPosition(task);
 
 		final int newLeft = TASK_MARGIN + pos * (tasksWidth + TASK_MARGIN);
+		if (newLeft == task.getLeft() ){
+			//Nothing to do
+			return;
+		}
 		final Event setTaskCoordinatesEvent = eventContainer.addNewEvent();
 		setTaskCoordinatesEvent.setEventBody(
 			new AnimationCallback() {
@@ -480,8 +488,7 @@ public class TaskBar extends Canvas {
 					}
 				});
 
-				final Event barResizeEvent = mainEventsChain
-						.addNewEventAfter(tasksResizeEvent);
+				final Event barResizeEvent = mainEventsChain.addNewEventAfter(tasksResizeEvent);
 				barResizeEvent.setEventBody(new AnimationCallback() {
 
 					@Override
@@ -515,6 +522,7 @@ public class TaskBar extends Canvas {
 	
 	/**
 	 * Computes tasks ideal width to make them properly fit the Taskbar
+	 * <b>WARNING:</b> This method should be called inside an Event object callback only
 	 * <b>WARNING:</b> This method is likely to need to be overridden in inherited classes 
 	 * @param taskBarWidth The taskbar width
 	 */
@@ -676,7 +684,7 @@ public class TaskBar extends Canvas {
 	 * maximum value itself, and if it is so compute a new value for tasks' width 
 	 * @param newMaxtasksWidth The value to be set
 	 */
-	public void setMaxTaskWidth(int newMaxtasksWidth) {
+	public void setMaxTasksWidth(int newMaxtasksWidth) {
 		maxTasksWidth = Math.max(minTasksWidth, newMaxtasksWidth);
 		if ( tasksWidth > maxTasksWidth ){
 			computeTasksWidth(getWidth());
@@ -690,7 +698,7 @@ public class TaskBar extends Canvas {
 	 * maximum value itself, and if it is so compute a new value for tasks' height
 	 * @param newMaxTasksHeight The value to be set
 	 */
-	public void setMaxTaskHeight(int newMaxTasksHeight) {
+	public void setMaxTasksHeight(int newMaxTasksHeight) {
 		maxTasksHeight = Math.max(minTasksHeight, newMaxTasksHeight);
 		if ( newMaxTasksHeight > maxTasksHeight ){
 			computeTasksHeight(getHeight());
@@ -704,12 +712,13 @@ public class TaskBar extends Canvas {
 	 * minimum value itself, and if it is so compute a new value for tasks' width 
 	 * @param newMinTasksWidth The value to be set
 	 */
-	public void setMinTaskWidth(int newMinTasksWidth) {
+	public void setMinTasksWidth(int newMinTasksWidth) {
 		minTasksWidth = Math.min(maxTasksWidth, newMinTasksWidth);
 		if ( newMinTasksWidth < minTasksWidth ){
 			computeTasksWidth(getWidth());
 		}		
-	}
+	}	
+
 	
 	/**
 	 * Sets the minimum value, in pixel, for a single Task item's height.
@@ -718,7 +727,7 @@ public class TaskBar extends Canvas {
 	 * minimum value itself, and if it is so compute a new value for tasks' width 
 	 * @param newMinTasksHeight The value to be set
 	 */
-	public void setMinTaskHeight(int newMinTasksHeight) {
+	public void setMinTasksHeight(int newMinTasksHeight) {
 		minTasksHeight = Math.min(maxTasksHeight, newMinTasksHeight);
 		if ( newMinTasksHeight < minTasksHeight){
 			computeTasksHeight(getHeight());
@@ -726,4 +735,73 @@ public class TaskBar extends Canvas {
 	}	
 	
 	
+	
+	
+	
+	/**
+	 * 
+	 * @return The maximum value that can be assigned to the tasks width
+	 */
+	public int getMaxTasksWidth() {
+		return maxTasksWidth;
+
+	}
+	
+	/**
+	 * 
+	 * @return The maximum value that can be assigned to the tasks height
+	 */
+	public int getMaxTasksHeight() {
+		return maxTasksHeight;		
+	}
+
+
+	/**
+	 * 
+	 * @return The minimum value that can be assigned to the tasks width
+	 */
+	public int getMinTasksWidth() {
+		return minTasksWidth;	
+	}
+	
+
+	/**
+	 * 
+	 * @return The minimum value that can be assigned to the tasks height
+	 */
+	public int getMinTasksHeight() {
+		return minTasksHeight;
+	}	
+	
+	/**
+	 * A single task's height
+	 */
+	public int getTasksHeight(){
+		return tasksHeight;
+	}
+	
+	
+	/**
+	 * When called marks the parameter window as "selected" and bring the previously selected window-s task
+	 * to its normal appearance
+	 * @param win The window to be selected
+	 */
+	public void markWindowAsSelected(TaskBarWindow win){
+		if (selectedWindow != null && !selectedWindow.equals(win) ){
+			selectedWindow.getTask().enterNormalStatus();
+		}
+		selectedWindow = win;
+		
+	}
+	
+	/**
+	 * Invoked to tell the TaskBar that the parameter window doen't have to be considered "selected" any more.
+	 * The deselection operation is successful iff the currently selected window matches the parameter
+	 * @param win The window to be deselected
+	 */
+	public void unmarkWindowAsSelected(TaskBarWindow win){
+		if (selectedWindow != null && selectedWindow.equals(win) ){
+			selectedWindow = null;
+		}		
+	}
 }

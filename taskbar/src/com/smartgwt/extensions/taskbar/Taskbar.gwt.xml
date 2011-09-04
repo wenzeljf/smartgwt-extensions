@@ -9,8 +9,7 @@
 	<inherits name="com.smartgwt.SmartGwtNoTheme"/>
 	<inherits name="com.smartclient.theme.silverwave.SilverWave"/>
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='com.smartgwt.extensions.taskbar.client.example.Showcase'/>
-
+ 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>

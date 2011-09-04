@@ -22,6 +22,12 @@ public class Task extends ToolStripButton implements ClickHandler {
 	 */
 	private TaskBarWindow window;
 	
+	
+	private static final int STATUS_NORMAL = 0;
+	private static final int STATUS_HAS_FOCUS = 1;
+	private static final int STATUS_MINIMIZED = 2;
+	private int status = STATUS_NORMAL;
+	
   
     private static final int HOVER_WIDTH = 250;
     private static final int HOVER_OPACITY = 80;
@@ -72,7 +78,6 @@ public class Task extends ToolStripButton implements ClickHandler {
         //setRadioGroup(TaskBar.getButtonGroup());
 		addClickHandler(this);
 	
-		this.restoreTask();
 		this.setBaseStyle("buttonTitle");	//Change if you want a different appearance
 		
 		this.setTaskPrompt(win.getTitle(), HOVER_BODY_TEXT);	//Sets a Tooltip prompt to explain options
@@ -82,21 +87,46 @@ public class Task extends ToolStripButton implements ClickHandler {
 	/**
 	 * Restores the Task button on the TaskBar (as the corresponding window is restored)
 	 */
-	public void restoreTask(){
-//		this.setBackgroundColor( UtilityServlet.LIGHT_BACKGROUND );
-//		this.setBorder("1px solid black");
-		this.setOpacity(100);
-		this.setSelected(true);
+	public void enterNormalStatus(){
+		this.setTitle(window.getTitle());
+//		this.setBorder("none");
+		setOpacity(100);
+		setSelected(true);
+		status = STATUS_NORMAL;
+		window.setOnBottom();
 	}
 	
 	/**
 	 * Minimizes the Task button on the TaskBar (as the corresponding window is minimized)
 	 */
-	public void minimizeTask(){
-//		this.setBackgroundColor( UtilityServlet.DARK_BACKGROUND );
-//		this.setBorder("1px dashed orange");
-		this.setOpacity(75);
-		this.setSelected(false);
+	public void enterMinimizedStatus(){
+		this.setTitle(window.getTitle());
+//		this.setBorder("none");
+		setOpacity(75);
+		setSelected(false);
+		status = STATUS_MINIMIZED;
+
+		if ( !window.getMinimized() ){
+			window.minimizeWindow();		
+		}
+	}
+	
+	/**
+	 * Minimizes the Task button on the TaskBar (as the corresponding window is minimized)
+	 */
+	public void enterFocusStatus(){
+		this.setTitle("<b style='color:red'>"+window.getTitle()+"</b>");
+//		this.setBorder("1px solid red");
+		setOpacity(100);
+		setSelected(true);
+		status = STATUS_HAS_FOCUS;
+		
+		if ( window.getMinimized() ){
+			window.restoreWindow();
+		}
+		
+		window.setOnTop();
+		
 	}
 	
 	/**
@@ -159,14 +189,21 @@ public class Task extends ToolStripButton implements ClickHandler {
      */
 	@Override
 	public void onClick(ClickEvent event) {
-		if ( window.getMinimized() ){
-			window.restoreWindow();
-			restoreTask();
+		switch (status){
+		case STATUS_NORMAL:
+			//=> selected
+			enterFocusStatus();
+			break;
+		case STATUS_HAS_FOCUS:
+			enterMinimizedStatus();
+			//=> minimized
+			break;		
+		case STATUS_MINIMIZED:
+			//=> selected
+			enterFocusStatus();
+			break;			
 		}
-		else{
-			window.minimizeWindow();		
-			minimizeTask();
-		}
+
 		
 	}
 	

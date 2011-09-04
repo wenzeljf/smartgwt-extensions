@@ -3,8 +3,12 @@ package com.smartgwt.extensions.taskbar.client;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.widgets.AnimationCallback;
 import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
 import com.smartgwt.client.widgets.events.CloseClientEvent;
+import com.smartgwt.client.widgets.events.DragRepositionStopEvent;
+import com.smartgwt.client.widgets.events.DragRepositionStopHandler;
 import com.smartgwt.client.widgets.events.MinimizeClickEvent;
 import com.smartgwt.client.widgets.events.MinimizeClickHandler;
 
@@ -19,6 +23,8 @@ public abstract class TaskBarWindow extends Window {
 	private int oldTop = 0; 
 	private int oldWidth = 0;
 	private int oldHeight = 0;
+	
+	private boolean isOnTop;
 
 	/**
 	 * Reference to the Task connected to this Window 
@@ -47,7 +53,7 @@ public abstract class TaskBarWindow extends Window {
             public void onMinimizeClick(MinimizeClickEvent event) {
             	//Can't just minimize the window: control goes to the connected task
             	event.cancel();
-            	task.minimizeTask();
+            	task.enterMinimizedStatus();
             	minimizeWindow();              
             }
         } );
@@ -64,6 +70,24 @@ public abstract class TaskBarWindow extends Window {
 			}
 		});
 		
+        this.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				checkOnTop();
+			}
+		});
+        
+        this.addDragRepositionStopHandler(
+    		new DragRepositionStopHandler() {
+				
+				@Override
+				public void onDragRepositionStop(DragRepositionStopEvent event) {
+					checkOnTop();						
+				}
+			}
+        );
+
 	}
 	
 	/**
@@ -75,9 +99,10 @@ public abstract class TaskBarWindow extends Window {
         oldWidth = getWidth();
         oldHeight = getHeight();
         Task task = getTask();
-
         
-        this.animateMove(task.getAbsoluteLeft(), task.getAbsoluteTop(), 
+		taskBar.unmarkWindowAsSelected(this);
+        
+		animateMove(task.getAbsoluteLeft(), task.getAbsoluteTop(), 
 
         		new AnimationCallback() {
 					
@@ -90,8 +115,8 @@ public abstract class TaskBarWindow extends Window {
 			
         		, ANIMATION_TIME );
         
-        this.animateResize(task.getWidth(), task.getHeight());
-        this.animateHide(AnimationEffect.FADE, null, ANIMATION_TIME);
+        animateResize(task.getWidth(), task.getHeight());
+        animateHide(AnimationEffect.FADE, null, ANIMATION_TIME);
 	}
 
 	/**
@@ -128,4 +153,41 @@ public abstract class TaskBarWindow extends Window {
 		return task;
 	}
 
+	/**
+	 * Acknowledge that the window has been brought on top and notify the related task
+	 * 
+	 */
+	protected void checkOnTop(){
+		if ( !isOnTop ){
+			isOnTop = true;
+			getTask().enterFocusStatus();
+		}		
+	}
+	
+	/**
+	 * 
+	 * @return Whether or not this window is on top (among all other windows in the same taskbar)
+	 */
+	public boolean isOnTop() {
+		return isOnTop;
+	}
+
+	/**
+	 * Brings the current window to front; also notifies the taskbar containing this
+	 * window that this one is selected;
+	 * 
+	 */
+	public void setOnTop() {
+		bringToFront();
+		isOnTop = true;
+		taskBar.markWindowAsSelected(this);
+	}
+	
+	/**
+	 * Acknowledge that this window is not on Top anymore
+	 * 
+	 */
+	public void setOnBottom() {
+		isOnTop = false;
+	}
 }
