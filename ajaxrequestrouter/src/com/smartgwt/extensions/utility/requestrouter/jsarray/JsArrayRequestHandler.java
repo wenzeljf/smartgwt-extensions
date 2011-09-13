@@ -12,5 +12,6 @@ import com.smartgwt.extensions.utility.requestrouter.AJAXRequestHandler;
  *
  */
 public interface JsArrayRequestHandler<T extends JavaScriptObject> extends AJAXRequestHandler{
-	public  void onSuccess(JsArray<T> jso );
+	
+	public abstract void onSuccess(JsArray<T> jso );
 }
