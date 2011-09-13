@@ -2,6 +2,7 @@ package com.smartgwt.extensions.utility.requestrouter;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import com.smartgwt.extensions.utility.requestrouter.javascriptobject.JsObjectRequestHandler;
 import com.smartgwt.extensions.utility.requestrouter.jsarray.JsArrayRequestHandler;
 import com.smartgwt.extensions.utility.requestrouter.json.JSONRequestHandler;
 
@@ -156,7 +157,7 @@ public class AJAXRequest<T extends JavaScriptObject> implements Comparable<AJAXR
 			if (jso == null) {
 				switch(responseType){
 		 			case JAVASCRIPT_OBJECT :
-		 				handler.onFailure(this);
+		 				((JsObjectRequestHandler)handler).onFailure(this);
 			 			break;
 			 		case JSARRAY:
 			 			((JsArrayRequestHandler<T>)handler).onFailure(this);
@@ -172,7 +173,7 @@ public class AJAXRequest<T extends JavaScriptObject> implements Comparable<AJAXR
 		    //alert(jso.toString());
 			switch(responseType){
  			case JAVASCRIPT_OBJECT :
- 				handler.onSuccess(jso);
+ 				((JsObjectRequestHandler)handler).onSuccess(jso);
 	 			break;
 	 		case JSARRAY:
 	 			((JsArrayRequestHandler<T>)handler).onSuccess(asArray(jso));

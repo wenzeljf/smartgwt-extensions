@@ -9,6 +9,7 @@ import com.smartgwt.extensions.utility.requestrouter.AJAXRequestHandler;
  * @author marcellolarocca@gmail.com
  *
  */
-public interface JSONRequestHandler extends AJAXRequestHandler{
-	public void onSuccess(String jso );
+public abstract class JSONRequestHandler implements AJAXRequestHandler {
+	
+	public abstract void onSuccess(String jso );
 }
