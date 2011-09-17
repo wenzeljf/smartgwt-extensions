@@ -1,5 +1,6 @@
 package com.smartgwt.extensions.utility.requestrouter;
 
+import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.json.client.JSONArray;
@@ -141,7 +142,14 @@ public class AJAXRequest<T extends JavaScriptObject> implements Comparable<AJAXR
 		 * Starts the AJAX request
 		 */
 		public void getResponse(){
-			getResponse(requestID, url, this, responseType);
+			String callbackGETText;
+			if ( url.contains("?") ){
+				callbackGETText = "&callback=";
+			}else{
+				callbackGETText = "?callback=";
+			}
+			
+			getResponse(callbackGETText, this );
 		}
 		
 		/**
@@ -152,38 +160,38 @@ public class AJAXRequest<T extends JavaScriptObject> implements Comparable<AJAXR
 		 * @param request
 		 * @param responseType
 		 */
-		private native void getResponse(int requestID, String url, AJAXRequest<T> request, ResponseType responseType ) /*-{
-		 var callback = "callback" + requestID;
+		private native void getResponse(String callbackGETString, AJAXRequest<T> request ) /*-{
+		 var callback = "callback" + this.@com.smartgwt.extensions.utility.requestrouter.AJAXRequest::requestID;
 		
 		 // [1] Create a script element.
-		 var script = document.createElement("script");
-		 script.setAttribute("src", url + callback);
+		 var script = $doc.createElement("script");
+		 script.setAttribute("src", this.@com.smartgwt.extensions.utility.requestrouter.AJAXRequest::url + callbackGETString + callback);
 		 script.setAttribute("type", "text/javascript");
-		
+		 
 		 // [2] Define the callback function on the window object.
-		 window[callback] = function(jsonObj) {
+		 $wnd[callback] = function(jsonObj) {
 		 // [3]
    			request.@com.smartgwt.extensions.utility.requestrouter.AJAXRequest::handleAJAXResponse(Lcom/google/gwt/core/client/JavaScriptObject;)(jsonObj);
-		   	window[callback + "done"] = true;
+		   	$wnd[callback + "done"] = true;
 		 }
 		
 		 // [4] JSON download has 10-second timeout.
 		 setTimeout(
 			 function() {
-			   if (!window[callback + "done"]) {
+			   if (!$wnd[callback + "done"]) {
 			     request.@com.smartgwt.extensions.utility.requestrouter.AJAXRequest::handleAJAXResponse(Lcom/google/gwt/core/client/JavaScriptObject;)(null);
 			   }
 			
 			   // [5] Cleanup. Remove script and callback elements.
-			   document.body.removeChild(script);
-			   delete window[callback];
-			   delete window[callback + "done"];
+			   $doc.body.removeChild(script);
+			   delete $wnd[callback];
+			   delete $wnd[callback + "done"];
 			 }, 
 			 10000
 		 );
 		
 		 // [6] Attach the script element to the document body.
-		 document.body.appendChild(script);
+		 $doc.body.appendChild(script);
 		}-*/;
 		
 	  
@@ -206,7 +214,10 @@ public class AJAXRequest<T extends JavaScriptObject> implements Comparable<AJAXR
  				}else{
  					try{
  						((JsObjectResponseHandler)handler).onSuccess(jso);
- 					}catch(ClassCastException e){
+//TODO: Use java7 syntax:  	catch(JavaScriptException | ClassCastException e)					
+ 					}catch(JavaScriptException e_j){
+ 						((JsObjectResponseHandler)handler).onFailure(this);
+ 					}catch(ClassCastException e_c){
  						((JsObjectResponseHandler)handler).onFailure(this);
  					}
  				}
@@ -217,7 +228,9 @@ public class AJAXRequest<T extends JavaScriptObject> implements Comparable<AJAXR
  				}else{
  					try{
  	 		 			((JsArrayResponseHandler<T>)handler).onSuccess(asArray(jso));
- 					}catch(ClassCastException e){
+ 					}catch(JavaScriptException e_j){
+ 						((JsArrayResponseHandler<T>)handler).onFailure(this);
+ 					}catch(ClassCastException e_c){
  						((JsArrayResponseHandler<T>)handler).onFailure(this);
  					} 					
  				}	 			
@@ -228,7 +241,9 @@ public class AJAXRequest<T extends JavaScriptObject> implements Comparable<AJAXR
  				}else{
  					try{
  						((StringJSONResponseHandler)handler).onSuccess(asString(jso));
- 					}catch(ClassCastException e){
+ 					}catch(JavaScriptException e_j){
+ 						((StringJSONResponseHandler)handler).onFailure(this);
+ 					}catch(ClassCastException e_c){
  						((StringJSONResponseHandler)handler).onFailure(this);
  					} 	 							 			
  				}	 			
@@ -245,6 +260,8 @@ public class AJAXRequest<T extends JavaScriptObject> implements Comparable<AJAXR
  							throw new ClassCastException();
  						}
  						((JSONObjectResponseHandler)handler).onSuccess(jsonOBJ);
+ 					}catch(JavaScriptException e_j){
+ 						((JSONObjectResponseHandler)handler).onFailure(this);
  					}catch(ClassCastException e_c){
  						((JSONObjectResponseHandler)handler).onFailure(this);
 					}catch(NullPointerException e_n){
@@ -264,7 +281,9 @@ public class AJAXRequest<T extends JavaScriptObject> implements Comparable<AJAXR
  							throw new ClassCastException();
  						} 						
  						((JSONArrayResponseHandler)handler).onSuccess(jsonArray);
- 					}catch(ClassCastException e_c){
+ 					}catch(JavaScriptException e_j){
+ 						((JSONArrayResponseHandler)handler).onFailure(this);
+ 					}catch(ClassCastException e_c){ 						
  						((JSONArrayResponseHandler)handler).onFailure(this);
  					}catch(NullPointerException e_n){
  						((JSONArrayResponseHandler)handler).onFailure(this);
